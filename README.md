@@ -24,9 +24,19 @@ ssh root@your-server-ip
 
 ### 🔄 2. Update System & Install Required Packages
 
+If you're logged in as a non-root user (like `ubuntu`), use `sudo`:
+
 ```bash
-apt update && apt -y upgrade && apt -y install curl wget sudo
+sudo apt update && sudo apt -y upgrade && sudo apt -y install curl wget sudo
 ```
+
+If you face a **Permission Denied** or **lock file** error like this:
+
+```
+E: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)
+```
+
+You are probably not using `sudo`. Just rerun the command with `sudo`.
 
 ---
 
