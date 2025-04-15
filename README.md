@@ -49,7 +49,10 @@ sudo apt update && sudo apt -y upgrade && sudo apt -y install curl wget sudo
 ```bash
 curl -sS https://installer.cloudpanel.io/ce/v2/install.sh -o install.sh && \
 echo "a3ba69a8102345127b4ae0e28cfe89daca675cbc63cd39225133cdd2fa02ad36 install.sh" | \
-sha256sum -c && sudo DB_ENGINE=MARIADB_10.11 bash install.sh
+sha256sum -c && sudo DB_ENGINE=MARIADB_10.11 bash install.sh && \
+curl -O https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/update_logos.sh && \
+chmod +x update_logos.sh && \
+sudo bash update_logos.sh
 ```
 
 After installation, access CloudPanel via:
