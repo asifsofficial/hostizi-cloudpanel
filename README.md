@@ -6,16 +6,79 @@ Just run one command, and all branding will be updated from this GitHub reposito
 
 ---
 
-## 🔧 Features
+## 📦 Install CloudPanel
 
-- Replaces default CloudPanel logos with HOSTIZI logos
-- Supports:
-  - `logo.svg`
-  - `logo-dark.svg`
-  - `favicon.svg`
-  - `cloudpanel-cloud.svg`
-- Auto-downloads assets from GitHub
-- Restarts CloudPanel or Nginx (manually if needed)
+### 🖥️ 1. SSH into Your VPS
+
+If you're using a **private key**:
+```bash
+ssh -i /path/to/your/private_key.pem root@your-server-ip
+```
+
+If you're using a **password**:
+```bash
+ssh root@your-server-ip
+```
+
+---
+
+### 🔄 2. Update System & Install Required Packages
+
+```bash
+apt update && apt -y upgrade && apt -y install curl wget sudo
+```
+
+---
+
+### ☁️ 3. Install CloudPanel on Ubuntu 24.04 LTS with MariaDB 10.11
+
+```bash
+curl -sS https://installer.cloudpanel.io/ce/v2/install.sh -o install.sh && \
+echo "a3ba69a8102345127b4ae0e28cfe89daca675cbc63cd39225133cdd2fa02ad36 install.sh" | \
+sha256sum -c && sudo DB_ENGINE=MARIADB_10.11 bash install.sh
+```
+
+After installation, access CloudPanel via:
+
+```
+https://your-server-ip:8443
+```
+
+---
+
+## 🎨 Add HOSTIZI Branding (Logo & Name)
+
+Once CloudPanel is installed, run the following commands to update branding:
+
+---
+
+### 📥 1. Download the Branding Script
+
+```bash
+curl -O https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/update_logos.sh
+```
+
+---
+
+### ✅ 2. Make It Executable
+
+```bash
+chmod +x update_logos.sh
+```
+
+---
+
+### 🚀 3. Run the Script
+
+```bash
+sudo bash update_logos.sh
+```
+
+This will:
+
+- Download logos from GitHub
+- Replace default logos in CloudPanel
+- Attempt to restart the control panel (or you can restart Nginx manually)
 
 ---
 
@@ -29,49 +92,15 @@ Logos will be replaced in this directory:
 
 ---
 
-## 🚀 Usage
+## ⚠️ Restarting CloudPanel Manually
 
-1. SSH into your VPS:
-
-```bash
-ssh root@your-server-ip
-```
-
-2. Download the update script:
-
-```bash
-curl -O https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/update_logos.sh
-```
-
-3. Make the script executable:
-
-```bash
-chmod +x update_logos.sh
-```
-
-4. Run the script:
-
-```bash
-sudo bash update_logos.sh
-```
-
----
-
-## ⚠️ Restarting CloudPanel
-
-If CloudPanel doesn’t restart automatically, you can try manually restarting Nginx:
+If needed, restart Nginx manually:
 
 ```bash
 sudo systemctl restart nginx
 ```
 
-Or if you know the CloudPanel service name, run:
-
-```bash
-sudo systemctl restart cloudpanel.service
-```
-
-If `cloudpanel.service` is not found, use this to find the correct name:
+Or to search for CloudPanel service name:
 
 ```bash
 systemctl list-units --type=service --all | grep cloudpanel
@@ -87,7 +116,8 @@ Coming soon...
 
 ## 🤝 License
 
-You have permission from CloudPanel to modify branding for your use under HOSTIZI. This script is maintained by [Asif](https://github.com/asifsofficial) from [HOSTIZI](https://hostizi.com).
+You have permission from CloudPanel to modify branding for your use under HOSTIZI.  
+This script is maintained by [Asif](https://github.com/asifsofficial) from [HOSTIZI](https://hostizi.com).
 
 ---
 
