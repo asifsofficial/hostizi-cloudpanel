@@ -1,33 +1,36 @@
 #!/bin/bash
 
-# Define the CloudPanel logo paths and the GitHub URLs for your logos
+# Define the logo paths
 cloudpanel_logo_paths=(
-  "/home/clp/htdocs/app/files/public/assets/images/cloudpanel-cloud.svg"         # Original logo path
-  "/home/clp/htdocs/app/files/public/assets/images/favicon.svg"      # Original favicon path
-  "/home/clp/htdocs/app/files/public/assets/images/logo-dark.svg"   # Dark logo path (if needed)
-  "/home/clp/htdocs/app/files/public/assets/images/logo.svg"         # Main logo path
+  "/home/clp/htdocs/app/files/public/assets/images/cloudpanel-cloud.svg"
+  "/home/clp/htdocs/app/files/public/assets/images/favicon.svg"
+  "/home/clp/htdocs/app/files/public/assets/images/logo-dark.svg"
+  "/home/clp/htdocs/app/files/public/assets/images/logo.svg"
 )
 
-# Define the GitHub URLs where the logos are hosted
+# Define the GitHub logo URLs
 github_logo_urls=(
-  "https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/logos/cloudpanel-cloud.svg"   # URL for original logo
-  "https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/logos/favicon.svg"            # URL for original favicon
-  "https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/logos/logo-dark.svg"          # URL for dark logo
-  "https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/logos/logo.svg"               # URL for main logo
+  "https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/logos/cloudpanel-cloud.svg"
+  "https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/logos/favicon.svg"
+  "https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/logos/logo-dark.svg"
+  "https://raw.githubusercontent.com/asifsofficial/hostizi-cloudpanel/main/logos/logo.svg"
 )
 
-# Loop through each logo and replace the old one with the new one from GitHub
-echo "Updating logos from GitHub..."
+# Start logo replacement
+echo "Updating CloudPanel logos with HOSTIZI branding..."
 
 for i in "${!cloudpanel_logo_paths[@]}"; do
-  echo "Replacing logo: ${cloudpanel_logo_paths[$i]}"
-
-  # Download the logo from GitHub and replace the old logo
+  echo "Replacing ${cloudpanel_logo_paths[$i]}"
   curl -s -o "${cloudpanel_logo_paths[$i]}" "${github_logo_urls[$i]}"
 done
 
-# Restart CloudPanel to apply the new logos
-echo "Restarting CloudPanel to apply new logos..."
-systemctl restart cloudpanel
+# Restart Nginx safely
+echo "Restarting Nginx to apply branding..."
+if systemctl restart nginx 2>/dev/null; then
+  echo "Nginx restarted successfully."
+else
+  echo "Could not restart Nginx. Please restart it manually using:"
+  echo "   sudo systemctl restart nginx"
+fi
 
-echo "Logos updated successfully!"
+echo "Logos updated successfully with HOSTIZI branding!"
